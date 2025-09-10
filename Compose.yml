@@ -1,0 +1,41 @@
+services:
+  # PostgreSQL-Datenbank
+  db:
+    image: postgres:15
+    env_file:
+      - ./.env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - conduit-network
+
+  # Backend Django
+  backend:
+    build: ./backend
+    env_file:
+      - ./.env
+    ports:
+      - "${BACKEND_PORT}:8000"
+    depends_on:
+      - db
+    networks:
+      - conduit-network
+
+  # Frontend Angular
+  frontend:
+    build: ./frontend
+    env_file:
+      - ./.env
+    ports:
+      - "${FRONTEND_PORT}:4200"
+    depends_on:
+      - backend
+    networks:
+      - conduit-network
+
+networks:
+  conduit-network:
+    driver: bridge
+
+volumes:
+  db-data:
