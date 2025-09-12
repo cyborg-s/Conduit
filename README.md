@@ -30,20 +30,20 @@ This repository was created as part of my continuing education at the **Develope
 
 ### What is Conduit
 
-    Conduit, also known as the RealWorld Example App, is an open-source example application that serves as a Medium.com-like blogging platform. 
+Conduit, also known as the RealWorld Example App, is an open-source example application that serves as a Medium.com-like blogging platform. 
 
-    It demonstrates best practices in modern web stacks, both for the frontend (e.g. Angular, React, Vue) and the backend (e.g. Django, Node.js, Rails). 
+It demonstrates best practices in modern web stacks, both for the frontend (e.g. Angular, React, Vue) and the backend (e.g. Django, Node.js, Rails). 
 
-    The app is often used as a reference project to learn and test complete full-stack applications with authentication, CRUD functionality and API interactions.
+The app is often used as a reference project to learn and test complete full-stack applications with authentication, CRUD functionality and API interactions.
 
-    It is provided free by [Thinkster](https://thinkster.io/)
+It is provided free by [Thinkster](https://thinkster.io/)
 
 
 ### Conduit with Docker
 
-    Starting the frontend and backend in a container simplifies the environment configuration and makes the application portable, as all dependencies are bundled. 
+Starting the frontend and backend in a container simplifies the environment configuration and makes the application portable, as all dependencies are bundled. 
     
-    It also facilitates local testing and debugging without separate servers or network configuration.
+It also facilitates local testing and debugging without separate servers or network configuration.
 
 
 ### Folder structure of the Containization
