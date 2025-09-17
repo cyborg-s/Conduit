@@ -2,7 +2,7 @@
 
 ## Contanization of a frontend and backend application
 
-This repository is a guide for the containization of a simple [Frontend](https://github.com/cyborg-s/conduit-frontend) and corresponding [Backend](https://github.com/cyborg-s/conduit-backend) application.
+This repository is a guide for the containerization of a simple [Frontend](https://github.com/cyborg-s/conduit-frontend) and corresponding [Backend](https://github.com/cyborg-s/conduit-backend) application.
 
 This repository was created as part of my continuing education at the **Developer Academy**.
 
@@ -15,7 +15,7 @@ This repository was created as part of my continuing education at the **Develope
     4. [Description](#description)
        1. [What is Conduit](#what-is-conduit)
        2. [Conduit with Docker](#conduit-with-docker)
-       3. [Folder structure of the Contaization](#folder-structure-of-the-containization)
+       3. [Folder structure of the Contaization](#folder-structure-of-the-containerization)
     5. [Quickstart](#quickstart)
     6. [Usage](#usage)
 
@@ -46,7 +46,7 @@ Starting the frontend and backend in a container simplifies the environment conf
 It also facilitates local testing and debugging without separate servers or network configuration.
 
 
-### Folder structure of the Containization
+### Folder structure of the Containerization
 ```
 Conduit_Deploy/
     ├── backend
@@ -69,30 +69,26 @@ This section gives brief and minimal instructions on how to use the setup. More 
    git clone git@github.com:cyborg-s/Conduit_Deploy.git
    ```
 
-1b. Navigate to the project directory:
+2. Navigate to the project directory:
 
    ```bash
    cd Conduit_Deploy
    ```
 
-2. Create the `.env` file from the template and edit your own settings:
+3. Create the `.env` file from the template and edit your own settings:
    
    ```bash 
    cp example.env .env
    ``` 
 
-   ```bash
-   nano .env
-   ```
-
-3. Build and start the container in the background:
+4. Build and start the container in the background:
 
    ```bash
    docker compose up --build -d
    ```
 
 
-4. Check whether the server is running correctly:
+5. Check whether the server is running correctly:
 
     * Conduit can be accessed at the IP address of your VM on port 8282:
 
@@ -110,19 +106,14 @@ This section gives brief and minimal instructions on how to use the setup. More 
 
 ## Usage
 
-* Navigate to the project directory:
 
-   ```bash
-   cd Conduit_Depoyment
-   ```
-
-
-* Manage the container:
+### Manage the container:
   
   * show the log files:
     ```bash
     docker compose logs <CONTAINER_NAME> -f
     ```
+
   * Save the logs:
     ```bash
     docker compose logs <CONTAINER_NAME> -f > <NAME>.txt
@@ -143,7 +134,7 @@ This section gives brief and minimal instructions on how to use the setup. More 
     docker compose ps
     ```
 
-*  If no network is defined in the compose file, docker automatically creates one. 
+###  If no network is defined in the compose file, docker automatically creates one. 
    *  To check which networks exist:
 
         ```bash

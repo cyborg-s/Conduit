@@ -1,8 +1,8 @@
 [submodule "backend"]
 	path = backend
 	url = git@github.com:cyborg-s/conduit-backend.git
-	branch = master
+	branch = containerization
 [submodule "frontend"]
 	path = frontend
 	url = git@github.com:cyborg-s/conduit-frontend.git
-	branch = master
+	branch = containerization
