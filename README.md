@@ -109,7 +109,7 @@ This section gives brief and minimal instructions on how to use the setup. More 
 
 ### Manage the container:
   
-  * show the log files:
+  * Show the log files:
     ```bash
     docker compose logs <CONTAINER_NAME> -f
     ```
@@ -119,17 +119,17 @@ This section gives brief and minimal instructions on how to use the setup. More 
     docker compose logs <CONTAINER_NAME> -f > <NAME>.txt
     ```
 
-  * stop the container:
+  * Stop the container:
     ```bash
     docker compose stop <CONTAINER_NAME>
     ```
 
-  * delete the container:
+  * Delete the container:
     ```bash
     docker compose down <CONTAINER_NAME>
     ```
 
-  * list all containers that are operatet by Docker Compose:
+  * List all containers that are operatet by Docker Compose:
     ```bash
     docker compose ps
     ```
@@ -141,13 +141,13 @@ This section gives brief and minimal instructions on how to use the setup. More 
         docker network ls
         ```
 
-    * To list which containers are on a network:
+   * To list which containers are on a network:
 
         ```bash
         docker network inspect <NETWORK_NAME>
         ```
 
-    * To check if the wordpress and mariadb container are in the same network:
+   * To check if the wordpress and mariadb container are in the same network:
 
         ```bash
         docker network inspect conduit_deploy_conduit-network 
