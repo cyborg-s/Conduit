@@ -1,11 +1,11 @@
 name: Build & Deploy Conduit
 
 on:
-  # automatisches Deployment bei Push auf Branch "Deploy"
+  # Automatic deployment when pushing to the "Deploy" branch
   push:
     branches: [ "Deploy" ]
 
-  # manuelles Triggern möglich
+  # Manual triggering possible
   workflow_dispatch:
 
 env:
@@ -83,6 +83,11 @@ jobs:
         with:
           name: deploy-files
 
+      - name: Test SSH Key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -n 1
+
+
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -94,7 +99,7 @@ jobs:
           overwrite: true
 
       - name: Restart containers via SSH
-        uses: appleboy/ssh-action@v1.2.1
+        uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
