@@ -1,7 +1,7 @@
 name: Build & Deploy Conduit
 
 on:
-  # automatisches Deployment bei Push auf main
+  # automatisches Deployment bei Push auf Branch "Deploy"
   push:
     branches: [ "Deploy" ]
 
@@ -10,7 +10,6 @@ on:
 
 env:
   IMAGE_OWNER: cyborg-s  
-  #(Sascha Nyßen)  
 
 jobs:
   build:
@@ -19,8 +18,11 @@ jobs:
       packages: write
       contents: read
     steps:
-      - name: Checkout repository
+      - name: Checkout repository including submodules
         uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -48,8 +50,8 @@ jobs:
       - name: Build & Push Frontend Image
         uses: docker/build-push-action@v6
         with:
-          context: ./conduit-frontend
-          file: ./conduit-frontend/Dockerfile
+          context: ./frontend
+          file: ./frontend/Dockerfile
           push: true
           tags: ghcr.io/${{ env.IMAGE_OWNER }}/conduit-frontend:latest
           build-args: |
@@ -58,8 +60,8 @@ jobs:
       - name: Build & Push Backend Image
         uses: docker/build-push-action@v6
         with:
-          context: ./conduit-backend
-          file: ./conduit-backend/Dockerfile
+          context: ./backend
+          file: ./backend/Dockerfile
           push: true
           tags: ghcr.io/${{ env.IMAGE_OWNER }}/conduit-backend:latest
 
