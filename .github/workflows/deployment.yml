@@ -83,11 +83,6 @@ jobs:
         with:
           name: deploy-files
 
-      - name: Test SSH Key
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | head -n 1
-
-
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
         with:
