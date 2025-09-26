@@ -2,8 +2,8 @@ name: Build & Deploy Conduit
 
 on:
   push:
-    branches: [ "Deploy" ]   # automatisches Deployment bei Push auf Deploy-Branch
-  workflow_dispatch:         # manuelles Deployment möglich
+    branches: [ "Deploy" ]  
+  workflow_dispatch:        
 
 env:
   IMAGE_OWNER: cyborg-s  
@@ -31,7 +31,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Frontend-Image bauen und pushen
+
       - name: Build & Push Frontend Image
         uses: docker/build-push-action@v6
         with:
@@ -42,7 +42,7 @@ jobs:
           build-args: |
             API_URL=${{ vars.API_URL }}
 
-      # Backend-Image bauen und pushen
+
       - name: Build & Push Backend Image
         uses: docker/build-push-action@v6
         with:
@@ -51,7 +51,7 @@ jobs:
           push: true
           tags: ghcr.io/${{ env.IMAGE_OWNER }}/conduit-backend:latest
 
-      # Nur compose.yml hochladen (keine .env)
+
       - name: Store deployment files
         uses: actions/upload-artifact@v4
         with:
@@ -66,7 +66,22 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: deploy-files
-          path: ./deploy 
+          path: ./deploy
+
+
+      - name: Create .env file
+        run: |
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+          echo "DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}" >> .env
+          echo "DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}" >> .env
+          echo "DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}" >> .env
+          echo "DEBUG=${{ vars.DEBUG }}" >> .env
+          echo "ALLOWED_HOSTS=${{ vars.ALLOWED_HOSTS }}" >> .env
+          echo "CORS_ORIGIN_WHITELIST=${{ vars.CORS_ORIGIN_WHITELIST }}" >> .env
+          echo "API_URL=${{ vars.API_URL }}" >> .env
+          echo "BACKEND_EXTERNAL_PORT=${{ vars.BACKEND_EXTERNAL_PORT }}" >> .env
+          echo "FRONTEND_EXTERNAL_PORT=${{ vars.FRONTEND_EXTERNAL_PORT }}" >> .env
+
 
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
@@ -74,7 +89,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "deploy/Compose.yml"
+          source: "deploy/Compose.yml,.env"
           target: ${{ secrets.DEPLOY_DIR }}
           overwrite: true
 
