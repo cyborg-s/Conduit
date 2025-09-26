@@ -49,6 +49,9 @@ It also facilitates local testing and debugging without separate servers or netw
 ### Folder structure of the Containerization
 ```
 Conduit_Deploy/
+    ├── .github/workflows
+      ├── deployment.yml
+      └── README.md
     ├── backend
         ├── Dockerfile
         └── entrypoint.sh
