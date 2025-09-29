@@ -2,7 +2,10 @@ name: Build & Deploy Conduit
 
 on:
   push:
-    branches: [ "Deploy" ]  
+    branches: 
+      - main
+    tags:
+      - 'deploy-*'
   workflow_dispatch:        
 
 env:
@@ -10,7 +13,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       packages: write
       contents: read
@@ -52,21 +55,14 @@ jobs:
           tags: ghcr.io/${{ env.IMAGE_OWNER }}/conduit-backend:latest
 
 
-      - name: Store deployment files
-        uses: actions/upload-artifact@v4
-        with:
-          name: deploy-files
-          path: ./Compose.yml
+
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: build
     steps:
-      - name: Download deployment files
-        uses: actions/download-artifact@v4
-        with:
-          name: deploy-files
-          path: ./deploy
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
 
       - name: Create .env file
@@ -89,7 +85,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "deploy/Compose.yml,.env"
+          source: "Compose.yml,.env"
           target: ${{ secrets.DEPLOY_DIR }}
           overwrite: true
 
